@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 
-const { TOKEN_SECRET, REDDIT } = require('../credentials.json')
+const { TOKEN_SECRET, OAUTH } = require('../credentials.json')
 
 const AUTHORISED_USERS = [
     'lily-irl',
@@ -49,7 +49,7 @@ router.get('/callback', (req, res) => {
             'redirect_uri': 'https://archive.mhoc.lily-irl.com/callback'
         }, {
             headers: {
-                'Authorization': 'Basic ' + Buffer.from(REDDIT.clientId + ':' + REDDIT.clientSecret).toString('base64'),
+                'Authorization': 'Basic ' + Buffer.from(OAUTH.clientId + ':' + OAUTH.clientSecret).toString('base64'),
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(auth_response => {
