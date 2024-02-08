@@ -107,8 +107,6 @@ router.post('/archive/submit', (req, res) => {
                             return res.render('dataError', { err: err })
                         return res.redirect('/success')
                     })
-
-    return res.redirect('/')
 })
 
 module.exports = router
