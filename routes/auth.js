@@ -53,22 +53,22 @@ router.get('/callback', (req, res) => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(auth_response => {
-            if (auth_response.error)
+            if (auth_response.data.error)
                 return res.render('error', { error: auth_response.error })
             // step 2: confirm identity
             axios.get('https://oauth.reddit.com/api/v1/me', {
                 headers: {
-                    'Authorization': 'Bearer ' + auth_response.access_token,
+                    'Authorization': 'Bearer ' + auth_response.data.access_token,
                     'Content-Type': 'application/json',
                     'User-Agent': 'mhoc-archive (/r/MHOC) (/u/lily-irl) (v1.0.0)'
                 }
             }).then(user => {
-                if (AUTHORISED_USERS.includes(user.name)) {
-                    const token = this.generateToken(user.name)
+                if (AUTHORISED_USERS.includes(user.data.name)) {
+                    const token = this.generateToken(user.data.name)
                     req.session.token = token
                     return res.redirect('/')
                 }
-                return res.render('error', { error: 'Your account, ' + user.name + ', is not authorised to use the site. Please contact an admin if you believe this is in error.' })
+                return res.render('error', { error: 'Your account, ' + user.data.name + ', is not authorised to use the site. Please contact an admin if you believe this is in error.' })
             }).catch(error => console.error)
         }).catch(error => console.error)
     }
