@@ -4,14 +4,7 @@ const router = express.Router()
 const axios = require('axios')
 
 const { TOKEN_SECRET, OAUTH } = require('../credentials.json')
-
-const AUTHORISED_USERS = [
-    'lily-irl',
-    'model-raymondo',
-    'Sephronar',
-    'Lady_Aya',
-    'Frost_Walker2017'
-]
+const AUTHORISED_USERS = require('../users.json')
 
 function generateToken(username) {
     return jwt.sign({ data: username }, TOKEN_SECRET, { expiresIn: '1800s' })
