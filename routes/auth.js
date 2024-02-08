@@ -18,7 +18,9 @@ router.generateToken = function (username) {
 }
 
 router.authenticateToken = function (req, res, next) {
-    if (req.route === '/')
+    const EXCLUDED_ROUTES = ['/', '/login', '/callback']
+    
+    if (req.route in EXCLUDED_ROUTES)
         return next()
 
     const token = req.session.token
