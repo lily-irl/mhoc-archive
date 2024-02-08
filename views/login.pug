@@ -1,0 +1,15 @@
+extends layout
+
+block content 
+    .container.mt-3 
+        h1 Log in with reddit
+        p Please note that in order to use this site, you will need to be:
+        ul
+            li a moderator of /r/MHoC, or
+            li specifically authorised to use this website
+        p This isn't intended to be exclusionary - much like the wiki, it's simply intended to prevent bad actors from getting access. If you would like to be approved to access the archive website, please #[a(href='https://www.reddit.com/message/compose?to=lily-irl') let me know].
+        .alert.alert-primary.d-flex.align-items-center
+            i.bi-info-circle-fill.me-2
+            div If you've been sent to this page unexpectedly after already logging in, your authorisation token may have expired. Please log in again. If the issue recurs within half an hour, please #[a(href='https://www.reddit.com/message/compose?to=lily-irl') let me know].
+
+        a(href='https://www.reddit.com/api/v1/authorize?client_id=pv_pVp5DotQvu9AJhz4drg&response_type=code&state=archive&redirect_uri=https://archive.mhoc.lily-irl.com/callback&duration=temporary&scope=identity').btn.btn-danger Log in with reddit
