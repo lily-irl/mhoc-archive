@@ -15,7 +15,7 @@ app.use(session({
   secret: crypto.randomUUID(),
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }))
 
 app.use(express.static(path.join(__dirname, 'public/')))
@@ -28,10 +28,10 @@ app.use('/js/marked', express.static(path.join(__dirname, 'node_modules/marked')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use(auth.authenticateToken)
+app.use(auth.authenticator)
 
 app.use('/api', api)
-app.use('/', auth)
+app.use('/', auth.router)
 
 app.get('/', (req, res) => {
     res.render('index')

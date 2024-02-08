@@ -17,7 +17,7 @@ function generateToken(username) {
     return jwt.sign(username, TOKEN_SECRET, { expiresIn: '1800s' })
 }
 
-router.authenticateToken = function (req, res, next) {
+function authenticateToken(req, res, next) {
     const EXCLUDED_ROUTES = ['/', '/login', '/callback']
 
     if (EXCLUDED_ROUTES.includes(req.path))
@@ -74,4 +74,4 @@ router.get('/callback', (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = { router: router, authenticator: authenticateToken }
