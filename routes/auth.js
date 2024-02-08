@@ -50,7 +50,7 @@ router.get('/callback', (req, res) => {
         }, {
             headers: {
                 'Authorization': 'Basic ' + Buffer.from(REDDIT.clientId + ':' + REDDIT.clientSecret).toString('base64'),
-                'Content-Type': 'x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(auth_response => {
             if (auth_response.error)
