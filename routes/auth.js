@@ -19,8 +19,8 @@ router.generateToken = function (username) {
 
 router.authenticateToken = function (req, res, next) {
     const EXCLUDED_ROUTES = ['/', '/login', '/callback']
-    
-    if (req.route in EXCLUDED_ROUTES)
+
+    if (EXCLUDED_ROUTES.includes(req.path))
         return next()
 
     const token = req.session.token
@@ -62,7 +62,7 @@ router.get('/callback', (req, res) => {
                     'User-Agent': 'mhoc-archive (/r/MHOC) (/u/lily-irl) (v1.0.0)'
                 }
             }).then(user => {
-                if (user.name in AUTHORISED_USERS) {
+                if (AUTHORISED_USERS.includes(user.name)) {
                     const token = this.generateToken(user.name)
                     req.session.token = token
                     return res.redirect('/')
