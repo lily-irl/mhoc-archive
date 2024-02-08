@@ -14,7 +14,7 @@ const AUTHORISED_USERS = [
 ]
 
 function generateToken(username) {
-    return jwt.sign(username, TOKEN_SECRET, { expiresIn: '1800s' })
+    return jwt.sign({ data: username }, TOKEN_SECRET, { expiresIn: '1800s' })
 }
 
 function authenticateToken(req, res, next) {
