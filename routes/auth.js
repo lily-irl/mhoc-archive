@@ -13,7 +13,7 @@ const AUTHORISED_USERS = [
     'Frost_Walker2017'
 ]
 
-router.generateToken = function (username) {
+function generateToken(username) {
     return jwt.sign(username, TOKEN_SECRET, { expiresIn: '1800s' })
 }
 
@@ -64,7 +64,7 @@ router.get('/callback', (req, res) => {
                 }
             }).then(user => {
                 if (AUTHORISED_USERS.includes(user.data.name)) {
-                    const token = this.generateToken(user.data.name)
+                    const token = generateToken(user.data.name)
                     req.session.token = token
                     return res.redirect('/')
                 }
