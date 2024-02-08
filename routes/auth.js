@@ -39,13 +39,13 @@ router.get('/login', (req, res) => {
 })
 
 router.get('/callback', (req, res) => {
-    if (req.body['error'])
+    if (req.query['error'])
         return res.render('error', { error: req.body['error'] })
-    if (req.body['code']) {
+    if (req.query['code']) {
         // step 1
         axios.post('https://www.reddit.com/api/v1/access_token', {
             'grant_type': 'authorization_code',
-            'code': req.body['code'],
+            'code': req.query['code'],
             'redirect_uri': 'https://archive.mhoc.lily-irl.com/callback'
         }, {
             headers: {
