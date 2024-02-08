@@ -84,7 +84,7 @@ router.get('/archive/:bill/:submission', (req, res) => {
 
 router.post('/archive/submit', (req, res) => {
     const bill = req.body['bill-num']
-    const title = req.body['bill-title'] + ' Bill'
+    const title = req.body['bill-title']
     const text = req.body['bill-text']
     const lengthIssue = req.body['too-long'] === 'on' ? true : false
     const otherIssue = req.body['problem'] === 'on' ? true : false
