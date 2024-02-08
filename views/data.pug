@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    .container-sm.mt-3
+        h1 Archive bill data 
+            small.text-body-secondary.ml-1 #{':)'}
+        .row.g-4
+            .col-6
+                form(action='/api/archive/submit', method='POST')
+                    div.mb-3
+                        label(for='bill-num').form-label Bill number
+                        input(type='text', id='bill-num', name='bill-num', value=bill).form-control
+                        div.form-text Do not include '.2', '.A', etc.
+                    div.mb-3
+                        label(for='bill-title').form-label Bill title
+                        div.input-group
+                            input(type='text', id='bill-title', name='bill-title', value=title).form-control
+                            span.input-group-text Bill
+                        div.form-text Only include the short title, e.g. 'Railways Bill'
+                    div.mb-3
+                        label(for='bill-text').form-label Bill text
+                        textarea(id='bill-text', name='bill-text', rows=6).form-control= text
+                        div.form-text Include only the Bill text in markdown format, excluding 'Order, order!', opening speeches, and closing dates
+                    div.mb-3
+                        .form-check
+                            input(type='checkbox', name='too-long', id='too-long').form-check-input
+                            label(for='too-long').form-check-label This Bill links to a Google doc or is too long to fit in a reddit post
+                        .form-check
+                            input(type='checkbox', name='problem', id='problem').form-check-input
+                            label(for='problem').form-check-label There's some other issue with this Bill
+                        div.form-text If either of these are ticked, it's okay to leave the bill text empty
+                    button(type='submit').btn.btn-primary Submit
+            .col-6.h-100
+                .alert.alert-secondary
+                    h5 Markdown preview #[small.text-body-secondary.text-decoration-underline (please ensure the formatting is sane)]
+                    #preview
+    script(src='/js/marked/marked.min.js')
+    script(src='/js/dompurify/purify.min.js')
+    script(src='/js/preview.js')

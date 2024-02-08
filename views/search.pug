@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .container-sm.mt-3
+        h1 Search for a bill 
+            small.text-body-secondary.ml-1 and not a motion as of right now
+        .row
+            .col-5
+                form(action='/api/search', method='POST')
+                    div.mb-3
+                        label(for='bill-num').form-label Bill number
+                        div.input-group
+                            select(id='bill-type',name='bill-type').form-select
+                                option(value='B', selected) B
+                                option(value='LB') LB
+                            input(type='text', id='bill-num', name='bill-num', placeholder='001').form-control
+                        div.form-text Include leading zeroes to ensure the number is at least three digits, e.g., B001, B011, B111, B1111
+                    button(type='submit').btn.btn-primary Search for a bill

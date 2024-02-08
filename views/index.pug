@@ -1,0 +1,15 @@
+extends layout 
+
+block content 
+    .container
+        h1.display-1.text-center MHoC Bill Archive
+        .container
+            figure.text-center
+                blockquote.blockquote
+                    p My current thoughts on archiving: All bills/motions are put onto a shared Drivle
+                figcaption.blockquote-footer model-ray, Head Moderator
+            if success
+                .alert.alert-success Bill successfully archived. Thanks for your hard work!
+
+    .container.d-flex.justify-content-center.mt-5
+        a(href='/search').btn.btn-primary Get started

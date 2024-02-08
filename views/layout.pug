@@ -1,0 +1,10 @@
+html(lang='en', data-bs-theme='dark') 
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title= title || 'MHoC Archive'
+        link(rel='stylesheet', href='/css/index.css')
+        link(rel='stylesheet', href='/css/bootstrap/bootstrap.min.css')
+    body
+        block content
+        script(src='/js/bootstrap/bootstrap.bundle.min.js')

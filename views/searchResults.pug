@@ -1,0 +1,57 @@
+extends layout
+
+block content
+    .container.mt-5
+        h1 Search results: #{bill}
+        p.text-body-secondary Select the most recent version of this Bill (the version as enacted, or its last reading before it failed) #[em that includes the Bill text]. This may be a results post, third reading, or second reading.
+        if found_results.mhoc || found_results.mhol
+            ul(role='tablist').nav.nav-tabs
+                li(role='presentation').nav-item
+                    button(data-bs-toggle='tab', data-bs-target='#mhoc-tab-pane',type='button',role='tab',aria-controls='mhoc-tab-pane')#mhoc-tab.nav-link.active /r/MHoC
+                li(role='presentation').nav-item
+                    button(data-bs-toggle='tab', data-bs-target='#mhol-tab-pane',type='button',role='tab',aria-controls='mhol-tab-pane')#mhol-tab.nav-link /r/MHoL
+            .tab-content.container.mt-2
+                div(role='tabpanel',aria-labelledby='mhoc-tab',tabindex='0')#mhoc-tab-pane.tab-pane.fade.show.active
+                    if found_results.mhoc
+                        .row.row-cols-1.row-cols-md-3.g-4
+                            each post in results.mhoc
+                                .col
+                                    .card.h-100
+                                        .card-body
+                                            h5.card-title= post.title
+                                            p.card-text.text-body-secondary #{post.body} #[a(href='https://redd.it/' + post.id, target='_blank') read more]
+                                            a(href='/api/archive/' + bill + '/' + post.id).btn.btn-primary Select this post
+                                        .card-footer
+                                            small.text-body-secondary= post.timestamp
+                    else
+                        p No results found in /r/MHoC
+                        figure
+                            blockquote.blockquote
+                                p Am I missing something
+                            figcaption.blockquote-footer model-ray, 9 January 2024
+                div(role='tabpanel',aria-labelledby='mhol-tab',tabindex='0')#mhol-tab-pane.tab-pane.fade
+                    if found_results.mhol
+                        .row.row-cols-1.row-cols-md-2.g-4
+                            each post in results.mhol
+                                .col
+                                    .card.h-100
+                                        .card-body
+                                            h5.card-title= post.title
+                                            p.card-text.text-body-secondary #{post.body} #[a(href='https://redd.it/' + post.id, target='_blank') read more]
+                                            a(href='/api/archive/' + bill + '/' + post.id).btn.btn-primary Select this post
+                                        .card-footer
+                                            small.text-body-secondary= post.timestamp
+                    else
+                        p No results found in /r/MHoL
+                        figure
+                            blockquote.blockquote
+                                p Am I missing something
+                            figcaption.blockquote-footer model-ray, 9 January 2024
+        else
+            .alert.alert-danger
+                p Searching for #{bill} didn't give any results.
+                figure
+                    blockquote.blockquote
+                        p Am I missing something
+                    figcaption.blockquote-footer model-ray, 9 January 2024
+                
