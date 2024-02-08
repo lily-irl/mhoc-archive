@@ -49,13 +49,14 @@ router.get('/callback', (req, res) => {
             'redirect_uri': 'https://archive.mhoc.lily-irl.com/callback'
         }, {
             headers: {
-                'Authorization': 'Basic ' + Buffer.from(REDDIT.clientId + ':' + REDDIT.clientSecret).toString('base64')
+                'Authorization': 'Basic ' + Buffer.from(REDDIT.clientId + ':' + REDDIT.clientSecret).toString('base64'),
+                'Content-Type': 'x-www-form-urlencoded'
             }
         }).then(auth_response => {
             if (auth_response.error)
                 return res.render('error', { error: auth_response.error })
             // step 2: confirm identity
-            axios.post('https://oauth.reddit.com/api/v1/me', {
+            axios.get('https://oauth.reddit.com/api/v1/me', {
                 headers: {
                     'Authorization': 'Bearer ' + auth_response.access_token,
                     'Content-Type': 'application/json',
@@ -68,8 +69,8 @@ router.get('/callback', (req, res) => {
                     return res.redirect('/')
                 }
                 return res.render('error', { error: 'Your account, ' + user.name + ', is not authorised to use the site. Please contact an admin if you believe this is in error.' })
-            })
-        })
+            }).catch(error => console.error)
+        }).catch(error => console.error)
     }
 })
 
