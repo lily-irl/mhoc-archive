@@ -34,6 +34,9 @@ router.post('/search', (req, res) => {
         const mhoc = [...subreddits[0], ...subreddits[1]]
         const mhol = [...subreddits[2], ...subreddits[3]]
 
+        mhoc.sort((a, b) => b.created_utc - a.created_utc)
+        mhol.sort((a, b) => b.created_utc - a.created_utc)
+
         const truncateString = (string = '', maxLength = 50) => 
             string.length > maxLength 
             ? `${string.substring(0, maxLength)}…`
