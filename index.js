@@ -52,7 +52,6 @@ app.get('/', (req, res) => {
 
         return res.render('index', { complete: { b: counted_bills / TOTAL_BILLS, lb: counted_lord_bills / TOTAL_LORD_BILLS } })
     })
-    res.render('index')
 })
 
 app.get('/search', (req, res) => {
