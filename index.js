@@ -44,10 +44,10 @@ app.get('/', (req, res) => {
         let counted_bills = 0, counted_lord_bills = 0
         
         for (let bill of results) {
-            if (/B[0-9]{3,4}/.test(bill.id))
-                ++counted_bills
-            else if (/LB[0-9]{3,4}/.test(bill.id))
+            if (/LB[0-9]{3,4}/.test(bill.id))
                 ++counted_lord_bills
+            else if (/B[0-9]{3,4}/.test(bill.id))
+                ++counted_bills
         }
 
         return res.render('index', { complete: { b: counted_bills / TOTAL_BILLS, lb: counted_lord_bills / TOTAL_LORD_BILLS } })
