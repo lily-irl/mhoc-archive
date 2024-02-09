@@ -4,6 +4,7 @@ const session = require('express-session')
 const app = express()
 const PORT = process.env.PORT || 3300
 
+const database = require('./database')
 const api = require('./routes/api')
 const auth = require('./routes/auth')
 
@@ -34,6 +35,23 @@ app.use('/api', api)
 app.use('/', auth.router)
 
 app.get('/', (req, res) => {
+    database.query('SELECT id FROM bills', null, (errors, results, fields) => {
+        if (errors)
+            return res.render('index')
+
+        const TOTAL_BILLS = 1657
+        const TOTAL_LORD_BILLS = 277
+        let counted_bills = 0, counted_lord_bills = 0
+        
+        for (let bill of results) {
+            if (/B[0-9]{3,4}/.test(bill))
+                ++counted_bills
+            else if (/LB[0-9]{3,4}/.test(bill))
+                ++counted_lord_bills
+        }
+
+        return res.render('index', { complete: { b: counted_bills / TOTAL_BILLS, lb: counted_lord_bills / TOTAL_LORD_BILLS } })
+    })
     res.render('index')
 })
 
