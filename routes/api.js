@@ -17,12 +17,22 @@ router.post('/search', (req, res) => {
         }),
         r.search({
             query: bill,
+            subreddit: 'MHOCMP',
+            sort: 'new'
+        }),
+        r.search({
+            query: bill,
             subreddit: 'MHOL',
+            sort: 'new'
+        }),
+        r.search({
+            query: bill,
+            subreddit: 'MHOLVote',
             sort: 'new'
         })
     ]).then(subreddits => {
-        const mhoc = subreddits[0]
-        const mhol = subreddits[1]
+        const mhoc = [...subreddits[0], ...subreddits[1]]
+        const mhol = [...subreddits[2], ...subreddits[3]]
 
         const truncateString = (string = '', maxLength = 50) => 
             string.length > maxLength 
