@@ -42,15 +42,19 @@ app.get('/', (req, res) => {
         const TOTAL_BILLS = 1657
         const TOTAL_LORD_BILLS = 277
         let counted_bills = 0, counted_lord_bills = 0
+        let bills = [], lord_bills = []
         
         for (let bill of results) {
-            if (/LB[0-9]{3,4}/.test(bill.id))
+            if (/LB[0-9]{3,4}/.test(bill.id)) {
                 ++counted_lord_bills
-            else if (/B[0-9]{3,4}/.test(bill.id))
+                lord_bills.push(bill.id)
+            } else if (/B[0-9]{3,4}/.test(bill.id)) {
                 ++counted_bills
+                bills.push(bill.id)
+            }
         }
 
-        return res.render('index', { complete: { b: counted_bills / TOTAL_BILLS, lb: counted_lord_bills / TOTAL_LORD_BILLS } })
+        return res.render('index', { complete: { b: counted_bills / TOTAL_BILLS, lb: counted_lord_bills / TOTAL_LORD_BILLS }, bills: { commons: bills, lords: lord_bills } })
     })
 })
 

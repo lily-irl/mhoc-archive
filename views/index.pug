@@ -21,6 +21,15 @@ block content
                     h5.text-success-emphasis Commons Bills: #{complete.b.toFixed(2)}%
                 .col
                     h5.text-danger-emphasis Lords Bills: #{complete.lb.toFixed(2)}%
+            .row.text-center
+                .col
+                    ul.list-unstyled
+                        each id in bills.commons
+                            li= id
+                .col
+                    ul.list-unstyled
+                        each id in bills.lords
+                            li= id
 
 
     .container.d-flex.justify-content-center.mt-5
