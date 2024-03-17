@@ -129,7 +129,7 @@ router.get('/bill', (req, res) => {
     if (!bill)
         return res.render('error', { err: 'No bill id was provided; please check the URL and try again.' })
 
-    database.query('SELECT bill, title, author, text FROM bills WHERE bill = ?', [ bill ], (err, results) => {
+    database.query('SELECT title, author, text FROM bills WHERE id = ?', [ bill ], (err, results) => {
         if (err)
             return res.render('dataError', { err: err })
         if (results.length === 0)
