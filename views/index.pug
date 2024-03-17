@@ -25,11 +25,11 @@ block content
                 .col
                     ul.list-unstyled
                         each id in bills.commons
-                            li= id
+                            li #[a(href='/bill?bill=' + id)= id]
                 .col
                     ul.list-unstyled
                         each id in bills.lords
-                            li= id
+                            li #[a(href='/bill?bill=' + id)= id]
 
 
     .container.d-flex.justify-content-center.mt-5

@@ -98,6 +98,7 @@ router.get('/archive/:bill/:submission', (req, res) => {
 router.post('/archive/submit', (req, res) => {
     const bill = req.body['bill-num']
     const title = req.body['bill-title']
+    const author = req.body['bill-author']
     const text = req.body['bill-text']
     const lengthIssue = req.body['too-long'] === 'on' ? true : false
     const otherIssue = req.body['problem'] === 'on' ? true : false
@@ -113,13 +114,28 @@ router.post('/archive/submit', (req, res) => {
         return res.render('dataError', { err: 'This bill text is too long (' + text.length + '/40000). Please tick the box indicating this Bill is too long and leave the text box empty, and try again.' })
     }
 
-    database.query('INSERT INTO bills VALUES (?, ?, ?, ?, ?)',
-                    [bill, title, text, lengthIssue, otherIssue],
+    database.query('INSERT INTO bills VALUES (?, ?, ?, ?, ?, ?)',
+                    [bill, title, author, text, lengthIssue, otherIssue],
                     (err, results) => {
                         if (err)
                             return res.render('dataError', { err: err })
                         return res.redirect('/success')
                     })
+})
+
+router.get('/bill', (req, res) => {
+    const bill = req.query['bill']
+
+    if (!bill)
+        return res.render('error', { err: 'No bill id was provided; please check the URL and try again.' })
+
+    database.query('SELECT bill, title, author, text FROM bills WHERE bill = ?', [ bill ], (err, results) => {
+        if (err)
+            return res.render('dataError', { err: err })
+        if (results.length === 0)
+            return res.render('dataError', { err: 'No bills found with that id, double-check it?' })
+        return res.render('bill', { bill: bill, title: results[0].title, author: results[0].author, text: results[0].text })
+    })
 })
 
 module.exports = router

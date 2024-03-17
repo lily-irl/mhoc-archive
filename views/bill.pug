@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .container.mt-3
+        if bill.startsWith('B')
+            h1 #[span.badge.text-bg-success= bill] #{title}
+        else 
+            h1 #[span.badge.text-bg-danger= bill] #{title}
+        h3.text-body-secondary= author
+        #text.alert.alert-secondary= text 
+    
+    script(src='/js/marked/marked.min.js')
+    script(src='/js/dompurify/purify.min.js')
+    script(src='/js/view.js')

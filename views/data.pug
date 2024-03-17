@@ -16,6 +16,10 @@ block content
                         input(type='text', id='bill-title', name='bill-title', value=title).form-control
                         div.form-text Only include the short title, e.g. 'Railways Bill'
                     div.mb-3
+                        label(for='bill-author').form-label Author
+                        input(type='text', id='bill-author', name='bill-author').form-control
+                        div.form-text The author's reddit username, if known. Do not include '/u/', titles, or postnominals
+                    div.mb-3
                         label(for='bill-text').form-label Bill text
                         textarea(id='bill-text', name='bill-text', rows=6).form-control= text
                         div.form-text Include only the Bill text in markdown format, excluding 'Order, order!', opening speeches, and closing dates
