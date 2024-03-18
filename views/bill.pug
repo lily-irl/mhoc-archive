@@ -2,12 +2,27 @@ extends layout
 
 block content
     .container.mt-3
+        a(href='/').h1.text-reset MHoC Bill Archive
         if bill.startsWith('B')
-            h1 #[span.badge.text-bg-success= bill] #{title}
+            h3 #[span.badge.text-bg-success= bill] #{title}
         else 
-            h1 #[span.badge.text-bg-danger= bill] #{title}
+            h3 #[span.badge.text-bg-danger= bill] #{title}
         h3.text-body-secondary= author
-        #text.alert.alert-secondary= text 
+        #text.alert.alert-secondary= text
+        if lengthIssue
+            .alert.alert-danger.d-flex.align-items-center
+                i.bi-exclamation-circle-fill.me-2
+                div This bill is too long for reddit, is stored in a Google Doc, or no longer has its text accessible
+        if problem
+            .alert.alert-warning.d-flex.align-items-center
+                i.bi-exclamation-circle-fill.me-2
+                div There is some problem with this bill that prevents it from being properly archived, and it requires manual review
+        else
+            unless lengthIssue
+                .alert.alert-primary.d-flex.align-items-center
+                    i.bi-bookmark-check-fill.me-2
+                    div No issues were flagged with this Bill, and it has been marked as successfully archived.
+
     
     script(src='/js/marked/marked.min.js')
     script(src='/js/dompurify/purify.min.js')
