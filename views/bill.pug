@@ -2,7 +2,8 @@ extends layout
 
 block content
     .container.mt-3
-        a(href='/').h1.text-reset.mb-2 MHoC Bill Archive
+        .container.mb-3.px-0
+            a(href='/').h1.text-reset.mb-2 MHoC Bill Archive
         if bill.startsWith('B')
             h3 #[span.badge.text-bg-success= bill] #{title}
         else 
