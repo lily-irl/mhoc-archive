@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 
-const { TOKEN_SECRET, OAUTH } = require('../credentials.json')
+const { TOKEN_SECRET, OAUTH, REDDIT } = require('../credentials.json')
 const AUTHORISED_USERS = require('../users.json')
 
 function generateToken(username) {
@@ -28,7 +28,7 @@ function authenticateToken(req, res, next) {
 }
 
 router.get('/login', (req, res) => {
-    return res.render('login')
+    return res.render('login', { callback_uri: OAUTH['callback_uri'] })
 })
 
 router.get('/callback', (req, res) => {
@@ -39,7 +39,7 @@ router.get('/callback', (req, res) => {
         axios.post('https://www.reddit.com/api/v1/access_token', {
             'grant_type': 'authorization_code',
             'code': req.query['code'],
-            'redirect_uri': 'https://archive.mhoc.lily-irl.com/callback'
+            'redirect_uri': OAUTH['callback_uri']
         }, {
             headers: {
                 'Authorization': 'Basic ' + Buffer.from(OAUTH.clientId + ':' + OAUTH.clientSecret).toString('base64'),
@@ -53,7 +53,7 @@ router.get('/callback', (req, res) => {
                 headers: {
                     'Authorization': 'Bearer ' + auth_response.data.access_token,
                     'Content-Type': 'application/json',
-                    'User-Agent': 'mhoc-archive (/r/MHOC) (/u/lily-irl) (v1.0.0)'
+                    'User-Agent': REDDIT['userAgent']
                 }
             }).then(user => {
                 if (AUTHORISED_USERS.includes(user.data.name)) {
