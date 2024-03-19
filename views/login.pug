@@ -12,4 +12,4 @@ block content
             i.bi-info-circle-fill.me-2
             div If you've been sent to this page unexpectedly after already logging in, your authorisation token may have expired. Please log in again. If the issue recurs within half an hour, please #[a(href='https://www.reddit.com/message/compose?to=lily-irl') let me know].
 
-        a(href=`https://www.reddit.com/api/v1/authorize?client_id=pv_pVp5DotQvu9AJhz4drg&response_type=code&state=archive&redirect_uri=${callback_uri}&duration=temporary&scope=identity`).btn.btn-danger Log in with reddit
+        a(href=`https://www.reddit.com/api/v1/authorize?client_id=${client_id}&response_type=code&state=archive&redirect_uri=${callback_uri}&duration=temporary&scope=identity`).btn.btn-danger Log in with reddit

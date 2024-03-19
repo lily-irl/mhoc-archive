@@ -28,7 +28,7 @@ function authenticateToken(req, res, next) {
 }
 
 router.get('/login', (req, res) => {
-    return res.render('login', { callback_uri: OAUTH['callback_uri'] })
+    return res.render('login', { callback_uri: OAUTH['callback_uri'], client_id: OAUTH['clientId'] })
 })
 
 router.get('/callback', (req, res) => {
