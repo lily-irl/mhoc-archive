@@ -100,8 +100,8 @@ router.post('/archive/submit', (req, res) => {
     const title = req.body['bill-title']
     const author = req.body['bill-author']
     const text = req.body['bill-text']
-    const lengthIssue = req.body['too-long'] === 'on' ? true : false
-    const otherIssue = req.body['problem'] === 'on' ? true : false
+    const lengthIssue = req.body['too-long'] === 'on'
+    const otherIssue = req.body['problem'] === 'on'
 
     // error condition checks
     // bill number formatting
@@ -137,5 +137,22 @@ router.get('/bill', (req, res) => {
         return res.render('bill', { bill: bill, title: results[0].title, author: results[0].author, text: results[0].text, lengthIssue: results[0].lengthIssue, problem: results[0].problem })
     })
 })
+
+router.get('/leaderboard', (req, res) => {
+    const sql = `
+        SELECT author, COUNT(*) as count
+        FROM bills
+        GROUP BY submitter
+        ORDER BY count DESC
+    `;
+
+    database.query(sql, (err, results) => {
+        if (err) {
+            return res.render('dataError', { err: err });
+        }
+
+        return res.render('leaderboard', { leaderboard: results });
+    });
+});
 
 module.exports = router
