@@ -140,13 +140,13 @@ router.get('/bill', (req, res) => {
 
 router.get('/leaderboard', (req, res) => {
     const sql = `
-        SELECT author, COUNT(*) as count
+        SELECT submitter, COUNT(*) as count
         FROM bills
         GROUP BY submitter
         ORDER BY count DESC
     `;
 
-    database.query(sql, (err, results) => {
+    database.query(sql, [], (err, results) => {
         if (err) {
             return res.render('dataError', { err: err });
         }
