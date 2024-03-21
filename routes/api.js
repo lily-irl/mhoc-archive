@@ -102,7 +102,7 @@ router.post('/archive/submit', (req, res) => {
     const text = req.body['bill-text']
     const lengthIssue = req.body['too-long'] === 'on'
     const otherIssue = req.body['problem'] === 'on'
-
+    const archiver = req.user.name;
     // error condition checks
     // bill number formatting
     if (!/(B|LB)[0-9]{3,4}/.test(bill)) {
@@ -114,8 +114,8 @@ router.post('/archive/submit', (req, res) => {
         return res.render('dataError', { err: 'This bill text is too long (' + text.length + '/40000). Please tick the box indicating this Bill is too long and leave the text box empty, and try again.' })
     }
 
-    database.query('INSERT INTO bills VALUES (?, ?, ?, ?, ?, ?)',
-                    [bill, title, author, text, lengthIssue, otherIssue],
+    database.query('INSERT INTO bills VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    [bill, title, author, text, lengthIssue, otherIssue, archiver],
                     (err, results) => {
                         if (err)
                             return res.render('dataError', { err: err })

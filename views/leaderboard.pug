@@ -9,11 +9,10 @@ block content
         if topArchivers.length === 1
             h3 #{topArchivers[0].submitter} has archived the most at #{maxCount} bills.
         else
-            h3 There is a tie. #{topArchivers.map(user => user.submitter).join(', ')} have all archived the most at #{maxCount} bills.
-        table.table
+h3 There is a tie. #{topArchivers.slice(0, -1).map(user => user.submitter).join(', ')} and #{topArchivers[topArchivers.length - 1].submitter} have all archived the most at #{maxCount} bills.        table.table
             thead
                 tr
-                    th Name
+                    th Archiver
                     th Number of Archived Bills
             tbody
                 each user in leaderboard
