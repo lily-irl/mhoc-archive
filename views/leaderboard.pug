@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    .container.mt-3
+        .container.mb-3.px-0
+            a(href='/').h1.text-reset.mb-2 MHoC Bill Archive
+        - var maxCount = leaderboard[0].count
+        - var topArchivers = leaderboard.filter(user => user.count === maxCount)
+        if topArchivers.length === 1
+            h3 #{topArchivers[0].submitter} has archived the most at #{maxCount} bills.
+        else
+            h3 There is a tie. #{topArchivers.slice(0, -1).map(user => user.submitter).join(', ')} and #{topArchivers[topArchivers.length - 1].submitter} have all archived the most at #{maxCount} bills.
+        table.table
+            thead
+                tr
+                    th Archiver
+                    th Number of Archived Bills
+            tbody
+                each user in leaderboard
+                    tr
+                        td= user.submitter
+                        td= user.count

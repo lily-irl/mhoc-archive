@@ -100,9 +100,9 @@ router.post('/archive/submit', (req, res) => {
     const title = req.body['bill-title']
     const author = req.body['bill-author']
     const text = req.body['bill-text']
-    const lengthIssue = req.body['too-long'] === 'on' ? true : false
-    const otherIssue = req.body['problem'] === 'on' ? true : false
-
+    const lengthIssue = req.body['too-long'] === 'on'
+    const otherIssue = req.body['problem'] === 'on'
+    const archiver = req.user.name;
     // error condition checks
     // bill number formatting
     if (!/(B|LB)[0-9]{3,4}/.test(bill)) {
@@ -114,8 +114,8 @@ router.post('/archive/submit', (req, res) => {
         return res.render('dataError', { err: 'This bill text is too long (' + text.length + '/40000). Please tick the box indicating this Bill is too long and leave the text box empty, and try again.' })
     }
 
-    database.query('INSERT INTO bills VALUES (?, ?, ?, ?, ?, ?)',
-                    [bill, title, author, text, lengthIssue, otherIssue],
+    database.query('INSERT INTO bills VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    [bill, title, author, text, lengthIssue, otherIssue, archiver],
                     (err, results) => {
                         if (err)
                             return res.render('dataError', { err: err })
@@ -137,5 +137,22 @@ router.get('/bill', (req, res) => {
         return res.render('bill', { bill: bill, title: results[0].title, author: results[0].author, text: results[0].text, lengthIssue: results[0].lengthIssue, problem: results[0].problem })
     })
 })
+
+router.get('/leaderboard', (req, res) => {
+    const sql = `
+        SELECT submitter, COUNT(*) as count
+        FROM bills
+        GROUP BY submitter
+        ORDER BY count DESC
+    `;
+
+    database.query(sql, [], (err, results) => {
+        if (err) {
+            return res.render('dataError', { err: err });
+        }
+
+        return res.render('leaderboard', { leaderboard: results });
+    });
+});
 
 module.exports = router

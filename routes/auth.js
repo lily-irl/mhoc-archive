@@ -11,7 +11,7 @@ function generateToken(username) {
 }
 
 function authenticateToken(req, res, next) {
-    const EXCLUDED_ROUTES = ['/', '/login', '/callback', '/api/bill']
+    const EXCLUDED_ROUTES = ['/', '/login', '/callback', '/api/bill', '/api/leaderboard']
 
     if (EXCLUDED_ROUTES.includes(req.path))
         return next()
